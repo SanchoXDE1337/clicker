@@ -1,6 +1,9 @@
 import React from 'react';
 import './App.css';
-import Article from './componets/Article'
+import Button from '@material-ui/core/Button';
+import {Grid} from "@material-ui/core";
+import TextField from "@material-ui/core/TextField";
+import SimpleCard from "./componets/SimpleCard";
 
 const MAX_VALUE = 10;
 const MIN_VALUE = 0;
@@ -59,13 +62,63 @@ class App extends React.Component {
 
     render() {
         const {value, articles} = this.state;
-        return <div>
-            <button onClick={this.handleDecrement}>-</button>
-            <input type="number" value={value} onChange={this.handleChange} onClick={this.inputClick}/>
-            <button onClick={this.handleIncrement}>+</button>
-            {articles.map(({title, content}, i) => <Article title={title} content={content} key={i}/>)}
-        </div>
+        return(
+                <Grid
+                    container={true}
+                    spacing={3}
+                    direction="column"
+                    justify="center"
+                    alignItems="center"
+                >
+                    <Grid item>
+                        <h1>Clicker</h1>
+                    </Grid>
 
+                    <Grid item>
+                        <Grid
+                            container
+                            justify="center"
+                            alignItems="center"
+                            spacing={2}
+                        >
+                            <Grid item xl>
+                                <Button
+                                    variant="outlined"
+                                    color="secondary"
+                                    size={"large"}
+                                    onClick={this.handleDecrement}
+                                >-</Button>
+                            </Grid>
+                            <Grid item xl>
+                                <TextField
+                                    id="outlined-number"
+                                    label="Articles:"
+                                    value={value}
+                                    onChange={this.handleChange}
+                                    type="number"
+                                    onClick={this.inputClick}
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
+                                    variant="outlined"
+                                />
+                            </Grid>
+                            <Grid item xl>
+                                <Button
+                                    variant="outlined"
+                                    color="primary"
+                                    size={"large"}
+                                    onClick={this.handleIncrement}
+                                >+</Button>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+
+                    <Grid item md={4}>
+                        {articles.map(({title, content}, i) => <SimpleCard title={title} content={content} key={i}/>)}
+                    </Grid>
+                </Grid>
+        )
     }
 }
 
