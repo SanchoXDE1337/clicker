@@ -8,7 +8,6 @@ import Typography from '@material-ui/core/Typography';
 
 
 export default class SimpleCard extends React.Component {
-
     render () {
         const {title, content} = this.props;
         return(
@@ -26,8 +25,10 @@ export default class SimpleCard extends React.Component {
                     variant="outlined"
                     color="secondary"
                     size={"small"}
+                    onClick={this.props.onClick}
+                    id={this.props.id}
                 >
-                    <DeleteForeverOutlinedIcon />
+                    <DeleteForeverOutlinedIcon/>
                 </Button>
             </CardActions>
         </Card>

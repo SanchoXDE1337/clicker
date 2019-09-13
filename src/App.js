@@ -58,66 +58,83 @@ class App extends React.Component {
         }
     };
 
+    handleDeleteClick = async (e) => {
+        let articles = [...this.state.articles];
+        const id = e.target.id;
+        let value = this.state.value;
+        articles.splice(id, 1);
+        await this.setState({articles})
+        await this.setState({value: value - 1});
+    };
+
     inputClick = (e) => e.target.select();
 
     render() {
         const {value, articles} = this.state;
         return(
-                <Grid
-                    container={true}
-                    spacing={3}
-                    direction="column"
-                    justify="center"
-                    alignItems="center"
-                >
-                    <Grid item>
-                        <h1>Clicker</h1>
-                    </Grid>
+            <Grid
+                container={true}
+                spacing={3}
+                direction="column"
+                justify="center"
+                alignItems="center"
+            >
+                <Grid item>
+                    <h1>CLICKER</h1>
+                </Grid>
 
-                    <Grid item>
-                        <Grid
-                            container
-                            justify="center"
-                            alignItems="center"
-                            spacing={2}
-                        >
-                            <Grid item xl>
-                                <Button
-                                    variant="outlined"
-                                    color="secondary"
-                                    size={"large"}
-                                    onClick={this.handleDecrement}
-                                >-</Button>
-                            </Grid>
-                            <Grid item xl>
-                                <TextField
-                                    id="outlined-number"
-                                    label="Articles:"
-                                    value={value}
-                                    onChange={this.handleChange}
-                                    type="number"
-                                    onClick={this.inputClick}
-                                    InputLabelProps={{
-                                        shrink: true,
-                                    }}
-                                    variant="outlined"
-                                />
-                            </Grid>
-                            <Grid item xl>
-                                <Button
-                                    variant="outlined"
-                                    color="primary"
-                                    size={"large"}
-                                    onClick={this.handleIncrement}
-                                >+</Button>
-                            </Grid>
+                <Grid item>
+                    <Grid
+                        container
+                        justify="center"
+                        alignItems="center"
+                        spacing={2}
+                    >
+                        <Grid item xl>
+                            <Button
+                                variant="outlined"
+                                color="secondary"
+                                size={"large"}
+                                onClick={this.handleDecrement}
+                            >-</Button>
+                        </Grid>
+                        <Grid item xl>
+                            <TextField
+                                id="outlined-number"
+                                label="Articles:"
+                                value={value}
+                                inputProps={{
+                                    style: { textAlign: "center" }
+                                }}
+                                onChange={this.handleChange}
+                                type="number"
+                                onClick={this.inputClick}
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                                variant="outlined"
+                            />
+                        </Grid>
+                        <Grid item xl>
+                            <Button
+                                variant="outlined"
+                                color="primary"
+                                size={"large"}
+                                onClick={this.handleIncrement}
+                            >+</Button>
                         </Grid>
                     </Grid>
-
-                    <Grid item md={4}>
-                        {articles.map(({title, content}, i) => <SimpleCard title={title} content={content} key={i}/>)}
-                    </Grid>
                 </Grid>
+
+                <Grid item md={4}>
+                    {articles.map(({title, content}, i) => <SimpleCard
+                        title={title} content={content}
+                        key={i}
+                        id={i}
+                        articles={this.state.articles}
+                        onClick={this.handleDeleteClick} />)}
+                </Grid>
+            </Grid>
         )
     }
 }
