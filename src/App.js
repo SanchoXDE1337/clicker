@@ -1,24 +1,52 @@
 import React from 'react';
+// import ReactDOM from 'react-dom';
 import './App.css';
 import Button from '@material-ui/core/Button';
 import {Grid} from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import SimpleCard from "./componets/SimpleCard";
 import PrettySlider from "./componets/Slider";
+import Progress from "./componets/Progress";
 
 const MAX_VALUE = 10;
 const MIN_VALUE = 0;
 
 class App extends React.Component {
 
-    state = {articles: [], value: 0};
+    state = {articles: [], value: 0, YOffset: 0, height:0};
 
 
     async componentDidMount() {
         await this.addArticle();
         this.setState({value: this.state.articles.length});
-
+/*        window.addEventListener('scroll', this.handleScroll);
+        this.updateWindowDimensions();
+        window.addEventListener('resize', this.updateWindowDimensions);
+        this.setState({height: ReactDOM.findDOMNode(this).getBoundingClientRect().bottom});*/
     }
+
+/*    componentWillUnmount() {
+        window.removeEventListener('scroll', this.handleScroll);
+        window.removeEventListener('resize', this.updateWindowDimensions);
+    }*/
+
+/*    updateWindowDimensions() {
+        // console.log(window.innerHeight);
+        this.setState({height: window.innerHeight });
+    }*/
+
+    handleScroll = () => {
+
+/*        let scrollTop = -ReactDOM.findDOMNode(this).getBoundingClientRect().top;
+        let scrollBottom = ReactDOM.findDOMNode(this).getBoundingClientRect().bottom;
+        console.log(scrollTop);
+        console.log(this.state.height);
+        const normalise = scrollTop => (scrollTop) * 207 / (this.state.height);
+        if (this.state.height < scrollBottom) {
+            this.setState({height: scrollBottom});
+        }
+        this.setState({YOffset: normalise(scrollTop)});*/
+    };
 
     addArticle = async () => {
         const title = (await (await fetch('https://fish-text.ru/get?type=title')).json()).text;
@@ -88,6 +116,11 @@ class App extends React.Component {
                 justify="center"
                 alignItems="center"
             >
+
+                <Grid item className={"progress"}>
+                    <Progress value={this.state.YOffset} />
+                </Grid>
+
                 <Grid item>
                     <h1>CLICKER</h1>
                 </Grid>

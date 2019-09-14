@@ -1,7 +1,7 @@
 {
   "name": "clicker2",
   "version": "0.1.0",
-  "homepage": "https://github.com/SanchoXDE1337/clicker",
+  "homepage": "https://sanchoxde1337.github.io/clicker/",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.4.2",
