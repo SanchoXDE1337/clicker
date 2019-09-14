@@ -1,4 +1,6 @@
-
+.slider {
+  width: 250px;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
