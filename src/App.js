@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button';
 import {Grid} from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import SimpleCard from "./componets/SimpleCard";
+import PrettySlider from "./componets/Slider";
 
 const MAX_VALUE = 10;
 const MIN_VALUE = 0;
@@ -63,11 +64,19 @@ class App extends React.Component {
         const id = e.target.id;
         let value = this.state.value;
         articles.splice(id, 1);
-        await this.setState({articles})
+        await this.setState({articles});
         await this.setState({value: value - 1});
     };
 
     inputClick = (e) => e.target.select();
+
+    handleSliderChange = async (e, value) => {
+        const dif = value - this.state.value;
+        dif > 0
+            ? Array.from({length: dif}).forEach((_, i) => this.addArticle())
+            : Array.from({length: dif * -1}).forEach((_, i) => this.deleteArticle());
+        await this.setState({value});
+    };
 
     render() {
         const {value, articles} = this.state;
@@ -83,6 +92,13 @@ class App extends React.Component {
                     <h1>CLICKER</h1>
                 </Grid>
 
+                <Grid item className={"slider"}>
+                    <PrettySlider
+                        value = {value}
+                        onChange={this.handleSliderChange}
+                    />
+                </Grid>
+
                 <Grid item>
                     <Grid
                         container
@@ -90,7 +106,7 @@ class App extends React.Component {
                         alignItems="center"
                         spacing={2}
                     >
-                        <Grid item xl>
+                        <Grid item>
                             <Button
                                 variant="outlined"
                                 color="secondary"
@@ -98,7 +114,7 @@ class App extends React.Component {
                                 onClick={this.handleDecrement}
                             >-</Button>
                         </Grid>
-                        <Grid item xl>
+                        <Grid item>
                             <TextField
                                 id="outlined-number"
                                 label="Articles:"
@@ -115,7 +131,7 @@ class App extends React.Component {
                                 variant="outlined"
                             />
                         </Grid>
-                        <Grid item xl>
+                        <Grid item>
                             <Button
                                 variant="outlined"
                                 color="primary"
@@ -126,7 +142,7 @@ class App extends React.Component {
                     </Grid>
                 </Grid>
 
-                <Grid item md={4}>
+                <Grid item md={4} className={"main"}>
                     {articles.map(({title, content}, i) => <SimpleCard
                         title={title} content={content}
                         key={i}
